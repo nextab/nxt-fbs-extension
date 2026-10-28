@@ -1,0 +1,169 @@
+#nxt-fbs-builder-root {
+	max-width: 860px;
+	margin-top: 16px;
+}
+
+/* ── Toolbar ── */
+.nxt-toolbar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.nxt-save-status {
+	font-size: 13px;
+	padding: 4px 8px;
+	border-radius: 3px;
+	transition: opacity .3s;
+}
+
+.nxt-save-status.nxt-success {
+	color: #1e7e34;
+	background: #d4edda;
+}
+
+.nxt-save-status.nxt-error {
+	color: #721c24;
+	background: #f8d7da;
+}
+
+/* ── Button card ── */
+.nxt-btn-list {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.nxt-btn-card {
+	background: #fff;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
+	padding: 16px 20px;
+}
+
+.nxt-card-header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 12px;
+	margin-bottom: 14px;
+}
+
+.nxt-card-header-inputs {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+	flex: 1;
+}
+
+.nxt-btn-label-input,
+.nxt-btn-confirm-input {
+	max-width: 280px;
+}
+
+.nxt-btn-delete {
+	flex-shrink: 0;
+	color: #b32d2e !important;
+	border-color: #b32d2e !important;
+}
+
+.nxt-btn-delete:hover {
+	background: #b32d2e !important;
+	color: #fff !important;
+}
+
+/* ── Section label ── */
+.nxt-section-label {
+	font-weight: 600;
+	font-size: 12px;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	color: #646970;
+	margin: 0 0 8px;
+}
+
+.nxt-field-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #3c434a;
+	white-space: nowrap;
+}
+
+/* ── Action rows ── */
+.nxt-actions-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin-bottom: 10px;
+}
+
+.nxt-action-row {
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 3px;
+	padding: 10px 12px;
+}
+
+.nxt-action-top {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.nxt-type-select {
+	flex: 1;
+	max-width: 280px;
+}
+
+.nxt-btn-remove {
+	color: #646970;
+	font-size: 12px;
+}
+
+/* ── Action field area ── */
+.nxt-action-fields-wrap {
+	padding-left: 4px;
+}
+
+.nxt-action-fields {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px;
+}
+
+.nxt-select-sm {
+	min-width: 160px;
+}
+
+/* ── Label checkboxes ── */
+.nxt-label-option {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+}
+
+.nxt-label-chip {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 3px;
+	border-left: 3px solid #ccc;
+	background: #f0f0f1;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+/* ── Empty / add ── */
+.nxt-empty-note {
+	color: #646970;
+	font-style: italic;
+	margin: 4px 0;
+}
+
+.nxt-btn-add-action {
+	margin-top: 4px;
+	font-size: 12px;
+}
