@@ -9,6 +9,7 @@ observed, the root cause in the current code, a suggested fix in core, and how w
 around it. We would much rather delete our workarounds than maintain them.
 
 Verified against **Fluent Boards / Pro 2.2.2** and **FluentCRM 3.2.6** (October 2026).
+Section 6 (attachments) was added in November 2026 and checked against **Fluent Boards / Pro 2.3.0**.
 
 ---
 
@@ -21,6 +22,7 @@ Verified against **Fluent Boards / Pro 2.2.2** and **FluentCRM 3.2.6** (October 
 | 3 | [No extension point for the task detail view](#3-no-extension-point-for-the-task-detail-view) | Missing API | **open** (and broke our buttons) | `automations` |
 | 4 | [MCP `create-task` / `update-task` cannot set labels](#4-mcp-create-task--update-task-cannot-set-labels) | Missing feature | **open** | `boards_task_labels_mcp` |
 | 5 | [FluentCRM MCP has no company tools](#5-fluentcrm-mcp-has-no-company-tools) | Missing feature | **open** (FluentCRM 3.2.6) | `crm_companies_mcp` |
+| 6 | [Fluent Boards MCP cannot add attachments to a task](#6-fluent-boards-mcp-cannot-add-attachments-to-a-task) | Missing feature | **open** (still in 2.3.0) | `boards_attachments_mcp` |
 | – | [Time tracking lost on board move](#fixed-upstream) | Bug | fixed upstream | `board_move_preserve_time` (off) |
 | – | [FluentCRM MCP `list-contacts` ignored `page` / `per_page`](#fixed-upstream) | Bug | fixed in FluentCRM 3.2.6 | `crm_list_contacts_pagination_fix` |
 
@@ -171,6 +173,35 @@ MCP server, via `fluent_crm/mcp_loaded`, `fluent_crm/mcp_ability_names`,
 
 ---
 
+## 6. Fluent Boards MCP cannot add attachments to a task
+
+**Problem.** Fluent Boards Pro stores task attachments (files and links), but the MCP server
+(checked in Fluent Boards / Pro 2.3.0, `app/Modules/MCP/AbilitiesRegistrar.php`) has no tool
+to read or add them. An agent that should file a PDF on a task has to drive
+the browser UI.
+
+**Suggested fix in core.** An `add-task-attachment` ability, plus a way to send larger files
+without passing their bytes through the model, for example a short-lived upload URL.
+
+**Our workaround.** `includes/MCP/TaskAttachmentsMCP.php` registers three abilities on the
+Fluent Boards MCP server (via `fluent_boards/mcp_loaded` and `fluent_boards/mcp_ability_names`):
+
+- `fluent-boards/list-task-attachments` – files and links of a task.
+- `fluent-boards/add-task-attachment` – exactly one source: `link_url` (link attachment),
+  `source_url` (the server downloads a public file with `wp_safe_remote_get()`), or
+  `content_base64` + `file_name` (small files).
+- `fluent-boards/create-attachment-upload` – returns a single-use upload URL (15 minutes, bound
+  to user, board and task). The agent sends the local file with
+  `curl -F "file=@document.pdf" "<upload_url>"`. Only a hash of the token is stored.
+
+Files go through the same checks and storage as Pro's chunked upload
+(`AttachmentController::addTaskAttachmentFileChunk()`): extension allow-list, upload size limit,
+content check for inline types, `board_<id>` folder, then `AttachmentService::handleAttachment()`,
+so the activity log, attachment counter and `fluent_boards/upload_media_data` behave as for an
+upload in the UI.
+
+---
+
 ## Fixed upstream
 
 We keep these modules as switchable fallbacks.
@@ -213,6 +244,7 @@ We keep these modules as switchable fallbacks.
 | `board_move_preserve_time` | off |
 | `automations` | on |
 | `boards_task_labels_mcp` | on |
+| `boards_attachments_mcp` | on (needs Fluent Boards Pro) |
 | `crm_companies_mcp` | off |
 | `crm_list_contacts_pagination_fix` | on |
 | `mcp_ensure` | on |

@@ -49,6 +49,11 @@ class NXT_FBS_Settings
 				'description' => __('Erweitert Fluent-Boards-MCP create-task/update-task um Labels (ids, Titel oder Slugs). Ohne Core-Patch — überlebt Fluent-Boards-Updates.', 'nxt-fbs-extension'),
 				'default'     => true,
 			],
+			'boards_attachments_mcp' => [
+				'label'       => __('Fluent Boards Anhänge per MCP', 'nxt-fbs-extension'),
+				'description' => __('Neue MCP-Tools list-task-attachments, add-task-attachment (Link, Datei von URL, kleine Datei als Base64) und create-attachment-upload (einmalige Upload-URL für lokale Dateien per curl). Voraussetzung: Fluent Boards Pro. Nach dem Aktivieren MCP-Client neu laden.', 'nxt-fbs-extension'),
+				'default'     => true,
+			],
 			'mcp_ensure' => [
 				'label'       => __('Fluent MCP sicherstellen', 'nxt-fbs-extension'),
 				'description' => __('Erzwingt mcp_enabled für Fluent Boards + FluentCRM und hängt MCPInit erneut ein, falls Core den Server nicht registriert hat.', 'nxt-fbs-extension'),

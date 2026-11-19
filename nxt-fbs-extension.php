@@ -4,8 +4,8 @@ defined('ABSPATH') || exit;
 
 /*
 Plugin Name: NXT Fluent Boards Extension
-Description: Erweitert Fluent Boards um Automations-Buttons, alle Karten in der Listenansicht, FluentCRM-Companies-MCP, list-contacts-Paginierungs-Fix, Task-Labels per MCP, MCP-Endpoint-Compat und erhält Custom-Field-Werte (optional Zeiterfassung) beim Verschieben zwischen Boards.
-Version: 1.7.0
+Description: Erweitert Fluent Boards um Automations-Buttons, alle Karten in der Listenansicht, FluentCRM-Companies-MCP, list-contacts-Paginierungs-Fix, Task-Labels und Anhänge per MCP, MCP-Endpoint-Compat und erhält Custom-Field-Werte (optional Zeiterfassung) beim Verschieben zwischen Boards.
+Version: 1.8.0
 Author: nexTab
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html
@@ -14,7 +14,7 @@ Text Domain: nxt-fbs-extension
 
 if (!defined('NXT_FBS_EXT')) {
 	define('NXT_FBS_EXT', true);
-	define('NXT_FBS_EXT_VERSION', '1.7.0');
+	define('NXT_FBS_EXT_VERSION', '1.8.0');
 	define('NXT_FBS_EXT_PATH', plugin_dir_path(__FILE__));
 	define('NXT_FBS_EXT_URL', plugin_dir_url(__FILE__));
 }
@@ -114,6 +114,11 @@ add_action('plugins_loaded', function () {
 	if (NXT_FBS_Settings::isModuleEnabled('boards_task_labels_mcp')) {
 		require_once NXT_FBS_EXT_PATH . 'includes/MCP/TaskLabelsMCP.php';
 		(new NXT_FBS_TaskLabelsMCP())->init();
+	}
+
+	if (NXT_FBS_Settings::isModuleEnabled('boards_attachments_mcp')) {
+		require_once NXT_FBS_EXT_PATH . 'includes/MCP/TaskAttachmentsMCP.php';
+		(new NXT_FBS_TaskAttachmentsMCP())->init();
 	}
 
 	if (NXT_FBS_Settings::isModuleEnabled('mcp_ensure')) {
